@@ -1,13 +1,11 @@
 import type React from "react"
-
 import { useState } from "react"
 import type { Task } from "@/types/task"
-import { TaskForm } from "@/components/task-form"
-import { TaskItem } from "@/components/task-item"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { TaskForm } from "@/components/AddTaskForm"
+import { TaskItem } from "@/components/TaskItem"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 interface TaskListViewProps {
   tasks: Task[]
   onAddTask: (task: Omit<Task, "id" | "createdAt">) => void
@@ -66,35 +64,33 @@ export function TaskListView({ tasks, onAddTask, onUpdateTask, onDeleteTask }: T
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-foreground">Task Board</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-3xl font-bold text-foreground select-none">Task Board</h2>
+          <p className="text-muted-foreground select-none">
             {todoTasks.length} to do, {inProgressTasks.length} in progress, {doneTasks.length} completed
           </p>
         </div>
-        <Button onClick={() => setShowAddForm(true)} className="flex items-center gap-2">
+        <Button onClick={() => setShowAddForm(true)} className="flex items-center gap-2 cursor-pointer">
           <Plus className="h-4 w-4" />
           Add Task
         </Button>
       </div>
 
-      {showAddForm && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Add New Task</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <TaskForm
-              onSubmit={(task) => {
-                onAddTask({ ...task, status: "todo" })
-                setShowAddForm(false)
-              }}
-              onCancel={() => setShowAddForm(false)}
-            />
-          </CardContent>
-        </Card>
-      )}
+      <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Task</DialogTitle>
+          </DialogHeader>
+          <TaskForm
+            onSubmit={(task) => {
+              onAddTask({ ...task, status: "todo" })
+              setShowAddForm(false)
+            }}
+            onCancel={() => setShowAddForm(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 select-none">
         {columns.map((column) => (
           <div key={column.id} className="space-y-4">
             <div className="flex items-center justify-between">

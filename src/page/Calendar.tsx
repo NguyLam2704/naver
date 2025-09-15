@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import type { Task } from "@/types/task"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -96,8 +94,8 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-foreground">Calendar</h2>
-        <p className="text-muted-foreground">View tasks by deadline</p>
+        <h2 className="text-3xl font-bold text-foreground select-none">Calendar</h2>
+        {/* <p className="text-muted-foreground select-none">View tasks by deadline</p> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -138,7 +136,7 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
                   }
 
                   const dayTasks = getTasksForDate(day)
-                  const hasOverdue = dayTasks.some((task) => task.status !== "done" && new Date(task.deadline!) < today)
+                  // const hasOverdue = dayTasks.some((task) => task.status !== "done" && new Date(task.deadline!) < today)
 
                   return (
                     <button
@@ -146,9 +144,9 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
                       onClick={() => handleDateClick(day)}
                       className={cn(
                         "p-2 h-20 border rounded-lg text-left hover:bg-accent transition-colors",
-                        isToday(day) && "bg-primary text-primary-foreground hover:bg-primary/90",
+                        isToday(day) && "border-neutral-900",
                         isSelected(day) && !isToday(day) && "bg-accent",
-                        hasOverdue && "border-red-300 dark:border-red-700",
+                        // hasOverdue && "border-red-300 dark:border-red-700",
                       )}
                     >
                       <div className="font-medium text-sm">{day}</div>
@@ -158,10 +156,8 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
                             key={task.id}
                             className={cn(
                               "text-xs px-1 py-0.5 rounded truncate",
-                              task.status === "done"
-                                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                                : task.priority === "high"
-                                  ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                                  task.priority === "high"
+                                  ? "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300"
                                   : task.priority === "medium"
                                     ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
                                     : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
@@ -242,16 +238,16 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-muted-foreground text-sm">No tasks for this date.</p>
+                  <p className="text-muted-foreground text-sm select-none">No tasks for this date.</p>
                 )
               ) : (
-                <p className="text-muted-foreground text-sm">Click on a date to view tasks with deadlines.</p>
+                <p className="text-muted-foreground text-sm select-none">Click on a date to view tasks with deadlines.</p>
               )}
             </CardContent>
           </Card>
 
           {/* Calendar legend */}
-          <Card className="mt-4">
+          <Card className="mt-4 select-none">
             <CardHeader>
               <CardTitle className="text-sm">Legend</CardTitle>
             </CardHeader>
@@ -261,7 +257,7 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
                 <span>Today</span>
               </div>
               <div className="flex items-center gap-2 text-xs">
-                <div className="w-3 h-3 bg-red-100 dark:bg-red-900 rounded"></div>
+                <div className="w-3 h-3 bg-orange-100 dark:bg-orange-900 rounded"></div>
                 <span>High priority</span>
               </div>
               <div className="flex items-center gap-2 text-xs">
@@ -269,8 +265,8 @@ export function CalendarView({ tasks, onUpdateTask }: CalendarViewProps) {
                 <span>Medium priority</span>
               </div>
               <div className="flex items-center gap-2 text-xs">
-                <div className="w-3 h-3 bg-green-100 dark:bg-green-900 rounded"></div>
-                <span>Completed</span>
+                <div className="w-3 h-3 bg-blue-50 dark:bg-green-900 rounded"></div>
+                <span>Low priority</span>
               </div>
             </CardContent>
           </Card>

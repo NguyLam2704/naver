@@ -1,6 +1,4 @@
-"use client"
-
-import type { ViewType } from "@/app/page"
+import type { ViewType } from "@/App"
 import { Button } from "@/components/ui/button"
 import { CheckSquare, Calendar, BarChart3 } from "lucide-react"
 
@@ -11,7 +9,7 @@ interface NavigationProps {
 
 export function Navigation({ currentView, onViewChange }: NavigationProps) {
   const views = [
-    { id: "tasks" as const, label: "Task List", icon: CheckSquare },
+    { id: "tasks" as const, label: "Task Board", icon: CheckSquare },
     { id: "calendar" as const, label: "Calendar", icon: Calendar },
     { id: "analytics" as const, label: "Analytics", icon: BarChart3 },
   ]
@@ -27,7 +25,7 @@ export function Navigation({ currentView, onViewChange }: NavigationProps) {
                 key={id}
                 variant={currentView === id ? "default" : "ghost"}
                 onClick={() => onViewChange(id)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 cursor-pointer hover:opacity-75"
               >
                 <Icon className="h-4 w-4" />
                 {label}

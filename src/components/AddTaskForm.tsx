@@ -25,7 +25,7 @@ export function TaskForm({ task, onSubmit, onCancel }: TaskFormProps) {
   const [deadline, setDeadline] = useState<Date | undefined>(
     task?.deadline ? new Date(task.deadline) : undefined
   )
-  const formattedDeadline = deadline ? format(deadline, "yyyy-MM-dd") : ""
+  // const formattedDeadline = deadline ? format(deadline, "yyyy-MM-dd") : ""
 
   const [status, setStatus] = useState<Task["status"]>(task?.status || "todo")
 

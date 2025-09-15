@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { TaskListView } from "@/components/task-list-view"
-import { CalendarView } from "@/components/calendar-view"
-import { AnalyticsView } from "@/components/analytics-view"
-import { Navigation } from "@/components/navigation"
+import { TaskListView } from "@/page/TaskList"
+import { CalendarView } from "@/page/Calendar"
+import { AnalyticsView } from "@/page/Chart"
+import { Navigation } from "@/components/NavBar"
 import type { Task } from "@/types/task"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 
