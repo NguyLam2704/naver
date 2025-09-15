@@ -1,6 +1,4 @@
-"use client"
-
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { TaskListView } from "@/components/task-list-view"
 import { CalendarView } from "@/components/calendar-view"
 import { AnalyticsView } from "@/components/analytics-view"
@@ -13,29 +11,6 @@ export type ViewType = "tasks" | "calendar" | "analytics"
 export default function TodoApp() {
   const [currentView, setCurrentView] = useState<ViewType>("tasks")
   const [tasks, setTasks] = useLocalStorage<Task[]>("todo-tasks", [])
-
-  useEffect(() => {
-    const migratedTasks = tasks.map((task) => {
-      // Check if task has old completed field but no status
-      if ("completed" in task && !("status" in task)) {
-        const { completed, ...taskWithoutCompleted } = task as any
-        return {
-          ...taskWithoutCompleted,
-          status: completed ? "done" : "todo",
-        } as Task
-      }
-      // Ensure task has status field
-      if (!("status" in task)) {
-        return { ...(task as Task), status: "todo" as const }
-      }
-      return task
-    })
-
-    // Update tasks if migration was needed
-    if (JSON.stringify(migratedTasks) !== JSON.stringify(tasks)) {
-      setTasks(migratedTasks)
-    }
-  }, [tasks, setTasks])
 
   const addTask = (task: Omit<Task, "id" | "createdAt">) => {
     const newTask: Task = {
